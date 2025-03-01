@@ -14,9 +14,10 @@ const Home = () => {
       <div className="max-w-5xl mx-auto px-4">
         {/* Header Section */}
         <header className="mb-12 flex flex-col sm:flex-row items-center justify-between">
+          {/*TODO: Set user name from DB */}
           <h1 className="text-4xl font-extrabold text-gray-900">Hello, User</h1>
           <Link href="/doc/new" className="mt-6 sm:mt-0">
-            <Button className="p-6 text-lg">New Document</Button>
+            <Button className="p-6 text-lg">New Doc</Button>
           </Link>
         </header>
 

@@ -46,7 +46,8 @@ const AppSidebar = () => {
       <SidebarContent>
         <SidebarGroup className="space-y-4">
           <SidebarGroupLabel className="flex justify-between">
-            <h2 className="font-semibold text-lg">Project name</h2>
+            {/*TODO: Set to space name from DB*/}
+            <h2 className="font-semibold text-lg">Scrib</h2>
             <span>
               <SearchButton />
             </span>

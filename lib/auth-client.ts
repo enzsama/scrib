@@ -1,5 +1,5 @@
 import { createAuthClient } from "better-auth/client";
 
 export const { signIn, signUp, signOut, useSession } = createAuthClient({
-  baseURL: "/api/auth",
+  baseURL: process.env.BETTER_AUTH_URL,
 });
