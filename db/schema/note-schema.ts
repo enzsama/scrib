@@ -15,6 +15,7 @@ import { sql } from "drizzle-orm";
 //   },
 // });
 
+// TODO: AFTER SETUP WITH YDOC, BLOCKNOTE AND SOCKET.IO, NEED TO ADD A FIELD FOR NOTE TYPE: COLLABORATIVE OR PERSONAL, ALSO WHETHER IT'S PUBLIC OR PRIVATE
 export const note = pgTable("note", {
   id: text()
     .primaryKey()

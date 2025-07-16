@@ -10,24 +10,28 @@ export default function GlobalLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const isAuthPath =
-    pathname.startsWith("/email-verified") ||
-    pathname.startsWith("/login") ||
-    pathname.startsWith("/signup") ||
-    pathname.startsWith("/forgot-password") ||
-    pathname.startsWith("/reset-password");
+  const authpathnames = [
+    "/email-verified",
+    "/forgot-password",
+    "/login",
+    "/reset-password",
+    "/signup",
+  ];
+  const isAuthPath = authpathnames.some((authpath) =>
+    pathname.startsWith(authpath)
+  );
 
   if (isAuthPath) return <>{children}</>;
 
   return (
-    <section className="flex min-h-screen">
+    <main className="flex">
       <SidebarProvider>
         <AppSidebar />
-        <main className="flex-1">
+        <div className="flex-1">
           <CustomTrigger />
-          {children}
-        </main>
+          <div className="max-w-4xl py-8 mx-auto px-4">{children}</div>
+        </div>
       </SidebarProvider>
-    </section>
+    </main>
   );
 }

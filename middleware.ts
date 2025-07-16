@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import type { Session } from "better-auth";
 
 const authRoutes = ["/login", "/signup"];
-const passwordRoutes = ["forgotPassword", "resetPassword"];
+const passwordRoutes = ["/forgot-password", "/reset-password"];
 
 export default async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;

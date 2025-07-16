@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Scrib",
-  description: "A document and note taking app",
+  description: "A collaborative document and note taking app",
 };
 
 export default function RootLayout({

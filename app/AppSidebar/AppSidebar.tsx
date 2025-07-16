@@ -49,7 +49,7 @@ const menuItems = [
 
 const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
   return (
-    <Sidebar className="text-black" collapsible="icon" {...props}>
+    <Sidebar className="text-black" {...props}>
       <SidebarContent>
         <SidebarGroup className="space-y-4">
           <SidebarGroupLabel className="flex justify-between">

@@ -6,11 +6,8 @@ import { _success } from "zod/v4/core";
 
 // POST
 
-export const createNote = async (ownerId: string, title: string) => {
-  const [newNote] = await db
-    .insert(note)
-    .values({ ownerId, title })
-    .returning();
+export const createNote = async (ownerId: string) => {
+  const [newNote] = await db.insert(note).values({ ownerId }).returning();
   await db
     .insert(noteCollaborator)
     .values({ noteId: newNote.id, userId: ownerId, role: "owner" });
