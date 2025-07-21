@@ -5,11 +5,11 @@ import {
 } from "@/components/ui/carousel";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const Loading = () => {
+const HomeLoading = () => {
   return (
     <section className="min-h-screen max-w-4xl py-8 mx-auto px-4">
       <div className="mb-16 flex items-center justify-center">
-        <Skeleton className="h-10 w-96" />
+        <Skeleton className="h-10 w-82" />
       </div>
       <div>
         <Carousel className="w-full">
@@ -36,4 +36,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default HomeLoading;

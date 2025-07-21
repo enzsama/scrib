@@ -9,7 +9,7 @@ import {
 import { truncateTitle } from "@/lib/utils";
 import { NotebookText } from "lucide-react";
 import Link from "next/link";
-import NewNote from "./NewNote";
+import NewNoteButton from "./NewNoteButton";
 
 const CustomCarousel = ({
   notes,
@@ -21,7 +21,7 @@ const CustomCarousel = ({
   <Carousel>
     <CarouselContent>
       <CarouselItem className="basis-1/5 pl-4">
-        <NewNote ownerId={userId} />
+        <NewNoteButton ownerId={userId} />
       </CarouselItem>
       {notes.map((note) => (
         <CarouselItem className="basis-1/5 pl-4" key={note.id}>

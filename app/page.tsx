@@ -19,7 +19,7 @@ const Home = async () => {
   const userRecentNotes = await getUserCollaborationsNotes(userInfo.id);
 
   return (
-    <section>
+    <section className="max-w-4xl py-8 mx-auto px-4">
       <header className="mb-12 flex justify-center">
         <h1 className="text-3xl font-extrabold text-neutral-800">
           Hello, {getFirstName(userInfo.name)}

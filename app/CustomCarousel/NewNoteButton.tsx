@@ -6,7 +6,7 @@ import { NotebookPen } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
-const NewNote = ({ ownerId }: { ownerId: string }) => {
+const NewNoteButton = ({ ownerId }: { ownerId: string }) => {
   const router = useRouter();
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
@@ -25,7 +25,11 @@ const NewNote = ({ ownerId }: { ownerId: string }) => {
   };
 
   return (
-    <button disabled={isPending} onClick={handleClick}>
+    <button
+      disabled={isPending}
+      onClick={handleClick}
+      className="cursor-pointer"
+    >
       <Card className="shadow-none hover:shadow-sm transition-shadow h-32 w-38 text-neutral-600">
         <CardContent>
           <NotebookPen />
@@ -39,4 +43,4 @@ const NewNote = ({ ownerId }: { ownerId: string }) => {
   );
 };
 
-export default NewNote;
+export default NewNoteButton;

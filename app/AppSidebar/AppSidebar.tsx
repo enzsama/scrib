@@ -1,4 +1,11 @@
-import { Calendar, Home, Settings, Bot, Layout } from "lucide-react";
+import {
+  Calendar,
+  Home,
+  Settings,
+  Bot,
+  Layout,
+  NotebookTabs,
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -24,6 +31,11 @@ const menuItems = [
     title: "Home",
     url: "/",
     icon: <Home />,
+  },
+  {
+    title: "Notes",
+    url: "/n",
+    icon: <NotebookTabs />,
   },
   {
     title: "Scrib chat",

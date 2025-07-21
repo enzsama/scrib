@@ -29,7 +29,7 @@ export default function GlobalLayout({
         <AppSidebar />
         <div className="flex-1">
           <CustomTrigger />
-          <div className="max-w-4xl py-8 mx-auto px-4">{children}</div>
+          <div>{children}</div>
         </div>
       </SidebarProvider>
     </main>
