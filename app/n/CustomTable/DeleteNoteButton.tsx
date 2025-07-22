@@ -5,7 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useTransition } from "react";
 
 const DeleteNoteButton = ({ noteId }: { noteId: string }) => {
-  const [isPending, startTransition] = useTransition();
+  const [pending, startTransition] = useTransition();
   const { toast } = useToast();
 
   const handleClick = () => {
@@ -26,7 +26,7 @@ const DeleteNoteButton = ({ noteId }: { noteId: string }) => {
   };
 
   return (
-    <Button onClick={handleClick} disabled={isPending} variant="destructive">
+    <Button onClick={handleClick} disabled={pending} variant="destructive">
       Delete
     </Button>
   );

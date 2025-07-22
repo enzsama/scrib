@@ -13,15 +13,13 @@ import NewNoteButton from "./NewNoteButton";
 
 const CustomCarousel = ({
   notes,
-  userId,
 }: {
   notes: { id: string; title: string; updatedAt: Date }[];
-  userId: string;
 }) => (
   <Carousel>
     <CarouselContent>
       <CarouselItem className="basis-1/5 pl-4">
-        <NewNoteButton ownerId={userId} />
+        <NewNoteButton />
       </CarouselItem>
       {notes.map((note) => (
         <CarouselItem className="basis-1/5 pl-4" key={note.id}>

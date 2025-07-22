@@ -1,19 +1,26 @@
 "use client";
 import { createNote } from "@/actions/note-actions";
 import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/components/ui/use-toast";
+import { useSession } from "@/lib/auth-client";
 import { NotebookPen } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
-const NewNoteButton = ({ ownerId }: { ownerId: string }) => {
+const NewNoteButton = () => {
   const router = useRouter();
   const { toast } = useToast();
-  const [isPending, startTransition] = useTransition();
+  const [pending, startTransition] = useTransition();
+  const { data, isPending } = useSession();
+
+  if (isPending) return <Skeleton className="h-32 w-38" />;
+  if (!data || !data.user) return <div></div>;
+
   const handleClick = () => {
     startTransition(async () => {
       try {
-        const newNote = await createNote(ownerId);
+        const newNote = await createNote(data.user.id);
         if (newNote) router.push(`n/${newNote.id}`);
       } catch (error) {
         toast({
@@ -25,17 +32,13 @@ const NewNoteButton = ({ ownerId }: { ownerId: string }) => {
   };
 
   return (
-    <button
-      disabled={isPending}
-      onClick={handleClick}
-      className="cursor-pointer"
-    >
+    <button disabled={pending} onClick={handleClick} className="cursor-pointer">
       <Card className="shadow-none hover:shadow-sm transition-shadow h-32 w-38 text-neutral-600">
         <CardContent>
           <NotebookPen />
           <hr className="mt-2 mb-1" />
           <h3 className="text-sm font-semibold text-left">
-            {isPending ? "Creating" : "New note"}
+            {pending ? "Creating" : "New note"}
           </h3>
         </CardContent>
       </Card>

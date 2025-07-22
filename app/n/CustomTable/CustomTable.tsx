@@ -14,7 +14,6 @@ import NewNoteRowButton from "./NewNoteRowButton";
 // TODO: Format date and pass to the empty cell
 const CustomTable = ({
   notes,
-  userId,
 }: {
   notes: {
     id: string;
@@ -69,7 +68,7 @@ const CustomTable = ({
       })}
       <TableRow>
         <TableCell colSpan={5}>
-          <NewNoteRowButton ownerId={userId} />
+          <NewNoteRowButton />
         </TableCell>
       </TableRow>
     </TableBody>

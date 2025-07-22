@@ -1,19 +1,26 @@
 "use client";
 import { createNote } from "@/actions/note-actions";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/components/ui/use-toast";
+import { useSession } from "@/lib/auth-client";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
-const NewNoteRowButton = ({ ownerId }: { ownerId: string }) => {
+const NewNoteRowButton = () => {
   const router = useRouter();
   const { toast } = useToast();
-  const [isPending, startTransition] = useTransition();
+  const [pending, startTransition] = useTransition();
+  const { data, isPending } = useSession();
+
+  if (isPending) return <Skeleton className="h-8 w-24" />;
+  if (!data || !data.user) return <div></div>;
+
   const handleClick = () => {
     startTransition(async () => {
       try {
-        const newNote = await createNote(ownerId);
+        const newNote = await createNote(data.user.id);
         if (newNote) router.push(`n/${newNote.id}`);
       } catch (error) {
         toast({
@@ -26,12 +33,12 @@ const NewNoteRowButton = ({ ownerId }: { ownerId: string }) => {
 
   return (
     <Button
-      disabled={isPending}
+      disabled={pending}
       className="bg-neutral-300 hover:bg-neutral-500"
       onClick={handleClick}
     >
       <Plus />
-      New note
+      {pending ? "Creating" : "New note"}
     </Button>
   );
 };

@@ -31,7 +31,7 @@ const Home = async () => {
           Recent notes
         </h2>
         <div>
-          <CustomCarousel notes={userRecentNotes} userId={userInfo.id} />
+          <CustomCarousel notes={userRecentNotes} />
         </div>
       </div>
     </section>

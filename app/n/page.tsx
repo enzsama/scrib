@@ -11,24 +11,20 @@ const NoteListPage = async () => {
 
   if (!session || !session.user) return <div></div>;
 
-  const userInfo = {
-    id: session.user.id,
-    name: session.user.name,
-  };
-
-  const notes = await getUserCollaborationsNotes(userInfo.id);
+  const userId = session.user.id;
+  const notes = await getUserCollaborationsNotes(userId);
 
   return (
     <section className="max-w-7xl py-8 mx-auto px-4">
       <h1 className="text-3xl font-extrabold text-neutral-800 mb-8">Notes</h1>
       {notes.length !== 0 ? (
-        <CustomTable notes={notes} userId={userInfo.id} />
+        <CustomTable notes={notes} userId={userId} />
       ) : (
         <div className="flex flex-col items-center space-y-4">
           <p className="pt-6 text-neutral-600">
             Notes you contribute to will show here
           </p>
-          <NewNoteRowButton ownerId={userInfo.id} />
+          <NewNoteRowButton />
         </div>
       )}
     </section>

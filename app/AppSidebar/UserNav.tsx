@@ -1,5 +1,3 @@
-"use client";
-
 import {
   BadgeCheck,
   Bell,
@@ -8,11 +6,6 @@ import {
   LogOut,
   Sparkles,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useTransition } from "react";
-import { signOut } from "@/lib/auth-client";
-import { useToast } from "@/components/ui/use-toast";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -29,6 +22,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import LogoutButton from "./LogoutButton";
 
 const UserNav = ({
   user,
@@ -40,33 +34,6 @@ const UserNav = ({
   };
 }) => {
   const { isMobile } = useSidebar();
-  const { toast } = useToast();
-  const [isPending, startTransition] = useTransition();
-  const router = useRouter();
-
-  const handleLogout = () => {
-    toast({
-      description: "Logging out...",
-      variant: "default",
-    });
-    startTransition(async () => {
-      try {
-        await signOut({
-          fetchOptions: {
-            onSuccess: () => {
-              router.push("/login");
-            },
-          },
-        });
-      } catch (error) {
-        toast({
-          description: "Couldn't log out. Please try again.",
-          variant: "destructive",
-        });
-        console.error("Error logging out: ", error);
-      }
-    });
-  };
 
   return (
     <SidebarMenu>
@@ -132,9 +99,8 @@ const UserNav = ({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout} disabled={isPending}>
-              <LogOut />
-              Log out
+            <DropdownMenuItem>
+              <LogoutButton />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

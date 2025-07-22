@@ -2,7 +2,7 @@
 import { db } from "@/db/drizzle";
 import { note, noteVersion, noteCollaborator } from "@/db/schema/note-schema";
 import { eq, sql } from "drizzle-orm";
-import { _success } from "zod/v4/core";
+import { revalidatePath } from "next/cache";
 
 // POST
 
@@ -87,4 +87,5 @@ export const removeCollaborator = async (noteId: string, userId: string) => {
 export const deleteNote = async (noteId: string) => {
   await db.delete(noteCollaborator).where(eq(noteCollaborator.noteId, noteId));
   await db.delete(note).where(eq(note.id, noteId));
+  revalidatePath("/n");
 };
