@@ -10,8 +10,8 @@ import {
 import Link from "next/link";
 import DeleteNoteDialog from "./DeleteNoteDialog";
 import NewNoteRowButton from "./NewNoteRowButton";
+import { formatDate } from "@/lib/utils";
 
-// TODO: Format date and pass to the empty cell
 const CustomTable = ({
   notes,
 }: {
@@ -56,8 +56,7 @@ const CustomTable = ({
               </Link>
             </TableCell>
             <TableCell>{note.owner}</TableCell>
-            {/* TODO: Pass formatted date to the cell below */}
-            <TableCell></TableCell>
+            <TableCell>{formatDate(note.updatedAt)}</TableCell>
             <TableCell>
               <div className="invisible group-hover:visible">
                 <DeleteNoteDialog noteId={note.id} />

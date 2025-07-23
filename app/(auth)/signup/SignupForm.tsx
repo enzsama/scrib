@@ -83,6 +83,7 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
                   description: "Too many requests. Please try again later.",
                   variant: "destructive",
                 });
+                break;
               default:
                 console.log("Error: ", ctx.error.message);
                 toast({
