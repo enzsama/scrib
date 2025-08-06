@@ -1,7 +1,7 @@
 "use server";
 import { db } from "@/db/drizzle";
 import { note, noteVersion, noteCollaborator } from "@/db/schema/note-schema";
-import { eq, sql } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 // POST
@@ -55,7 +55,10 @@ export const updateTitle = async (noteId: string, newTitle: string) => {
     await db.update(note).set({ title: newTitle }).where(eq(note.id, noteId));
 };
 
-export const updateContent = async (noteId: string, newContent: string) => {
+export const updateContent = async (
+  noteId: string,
+  newContent: Uint8Array<ArrayBufferLike>
+) => {
   const [currentNote] = await db
     .select()
     .from(note)
@@ -76,7 +79,10 @@ export const removeCollaborator = async (noteId: string, userId: string) => {
     await db
       .delete(noteCollaborator)
       .where(
-        sql`${noteCollaborator.noteId} = ${noteId} and ${noteCollaborator.userId} = ${userId}`
+        and(
+          eq(noteCollaborator.noteId, noteId),
+          eq(noteCollaborator.userId, userId)
+        )
       );
     return { success: true };
   } catch (error) {

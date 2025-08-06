@@ -4,18 +4,28 @@ import {
   text,
   integer,
   timestamp,
+  customType,
 } from "drizzle-orm/pg-core";
 import { user } from "./auth-schema";
 import { sql } from "drizzle-orm";
 
-// FOR YDOC DATA IN THE FUTURE
-// const bytea = customType<{ data: Buffer; notNull: true; default: true }>({
-//   dataType() {
-//     return "bytea";
-//   },
-// });
+const bytea = customType<{
+  data: Uint8Array<ArrayBufferLike>;
+  notNull: true;
+  default: true;
+}>({
+  dataType() {
+    return "bytea";
+  },
+  toDriver(value) {
+    return value;
+  },
+  fromDriver(value) {
+    return new Uint8Array<ArrayBufferLike>(value as ArrayBufferLike);
+  },
+});
 
-// TODO: AFTER SETUP WITH YDOC, BLOCKNOTE AND SOCKET.IO, NEED TO ADD A FIELD FOR NOTE TYPE: COLLABORATIVE OR PERSONAL, ALSO WHETHER IT'S PUBLIC OR PRIVATE
+// TODO: NEED TO ADD A FIELD FOR NOTE TYPE: COLLABORATIVE OR PERSONAL, ALSO WHETHER IT'S PUBLIC OR PRIVATE
 export const note = pgTable("note", {
   id: text()
     .primaryKey()
@@ -24,7 +34,9 @@ export const note = pgTable("note", {
     .notNull()
     .references(() => user.id),
   title: text("title").notNull().default("Untitled"),
-  content: text("string").notNull().default(""),
+  content: bytea("content")
+    .notNull()
+    .default(sql`'\\x'`),
   createdAt: timestamp({ withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp({ withTimezone: true }).defaultNow().notNull(),
 });
@@ -34,7 +46,9 @@ export const noteVersion = pgTable("note_version", {
   noteId: text("note_id")
     .notNull()
     .references(() => note.id),
-  content: text("string").notNull(),
+  content: bytea("content")
+    .notNull()
+    .default(sql`'\\x'`),
   createdBy: text("created_by")
     .notNull()
     .references(() => user.id),

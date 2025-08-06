@@ -62,7 +62,7 @@ const SignupForm = ({ className, ...props }: React.ComponentProps<"div">) => {
           },
           onError: (ctx: ErrorContext) => {
             switch (ctx.error.status) {
-              case 409:
+              case 422:
                 form.reset();
                 toast({
                   title: "Email already exists",

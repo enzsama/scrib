@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 import CustomTable from "./CustomTable";
 import { headers } from "next/headers";
-import { getUserCollaborationsNotes } from "@/lib/queryDB";
+import { getUserCollaborationsNotes } from "@/lib/queries";
 import NewNoteRowButton from "./CustomTable/NewNoteRowButton";
 
 const NoteListPage = async () => {
@@ -9,7 +9,8 @@ const NoteListPage = async () => {
     headers: await headers(),
   });
 
-  if (!session || !session.user) return <div></div>;
+  // Add a login markup and perhaps a button to the login page or a return the error page
+  if (!session || !session.user) return <div>Please log in</div>;
 
   const userId = session.user.id;
   const notes = await getUserCollaborationsNotes(userId);

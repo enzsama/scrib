@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@better-fetch/fetch": "^1.1.18",
+    "@blocknote/core": "^0.35.0",
+    "@blocknote/react": "^0.35.0",
+    "@blocknote/shadcn": "^0.35.0",
     "@hookform/resolvers": "^5.1.1",
     "@neondatabase/serverless": "^1.0.1",
     "@radix-ui/react-avatar": "^1.1.10",
@@ -34,6 +37,8 @@
     "react-hook-form": "^7.60.0",
     "resend": "^4.6.0",
     "tailwind-merge": "^3.3.1",
+    "y-websocket": "^3.0.0",
+    "yjs": "^13.6.27",
     "zod": "^4.0.5"
   },
   "devDependencies": {

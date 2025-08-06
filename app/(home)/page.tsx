@@ -2,14 +2,15 @@ import { auth } from "@/lib/auth";
 import { getFirstName } from "@/lib/utils";
 import { headers } from "next/headers";
 import CustomCarousel from "./CustomCarousel";
-import { getUserCollaborationsNotes } from "@/lib/queryDB";
+import { getUserCollaborationsNotes } from "@/lib/queries";
 
 const Home = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
-  if (!session || !session.user) return <div></div>;
+  // Add a login markup and perhaps a button to the login page or a return the error page
+  if (!session || !session.user) return <div>Please log in</div>;
 
   const userInfo = {
     id: session.user.id,

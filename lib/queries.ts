@@ -1,7 +1,7 @@
 import { db } from "@/db/drizzle";
 import { user } from "@/db/schema/auth-schema";
 import { note, noteCollaborator } from "@/db/schema/note-schema";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 const getOwnerName = async (ownerId: string) => {
   const [{ name }] = await db
@@ -38,4 +38,31 @@ export const getUserCollaborationsNotes = async (userId: string) => {
   );
 
   return collaborationNotes;
+};
+
+export const checkNote = async (noteId: string) => {
+  const [foundNote] = await db
+    .select()
+    .from(note)
+    .where(eq(note.id, noteId))
+    .limit(1);
+
+  if (foundNote) return true;
+  return false;
+};
+
+export const checkCollaborator = async (userId: string, noteId: string) => {
+  const [collaboration] = await db
+    .select()
+    .from(noteCollaborator)
+    .where(
+      and(
+        eq(noteCollaborator.noteId, noteId),
+        eq(noteCollaborator.userId, userId)
+      )
+    )
+    .limit(1);
+
+  if (collaboration) return true;
+  return false;
 };

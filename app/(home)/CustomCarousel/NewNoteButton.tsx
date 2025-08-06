@@ -15,13 +15,13 @@ const NewNoteButton = () => {
   const { data, isPending } = useSession();
 
   if (isPending) return <Skeleton className="h-32 w-38" />;
-  if (!data || !data.user) return <div></div>;
+  if (!data || !data.user) return null;
 
   const handleClick = () => {
     startTransition(async () => {
       try {
         const newNote = await createNote(data.user.id);
-        if (newNote) router.push(`n/${newNote.id}`);
+        if (newNote) router.push(`${newNote.id}`);
       } catch (error) {
         toast({
           description: `Couldn't create a new note, ${error}`,
