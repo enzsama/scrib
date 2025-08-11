@@ -1,41 +1,44 @@
 import { db } from "@/db/drizzle";
 import { user } from "@/db/schema/auth-schema";
 import { note, noteCollaborator } from "@/db/schema/note-schema";
-import { and, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 
-const getOwnerName = async (ownerId: string) => {
-  const [{ name }] = await db
-    .select({ name: user.name })
+export const getUserDetails = async (userId: string) => {
+  const [currentUser] = await db
+    .select({ name: user.name, email: user.email, image: user.image })
     .from(user)
-    .where(eq(user.id, ownerId))
+    .where(eq(user.id, userId))
     .limit(1);
 
-  return name;
+  return currentUser;
+};
+
+export const getUserRecentNotes = async (userId: string) => {
+  const recentNotes = await db
+    .select({ id: note.id, title: note.title, updatedAt: note.updatedAt })
+    .from(noteCollaborator)
+    .innerJoin(note, eq(note.id, noteCollaborator.noteId))
+    .where(eq(noteCollaborator.userId, userId))
+    .orderBy(desc(note.updatedAt))
+    .limit(8);
+
+  return recentNotes;
 };
 
 export const getUserCollaborationsNotes = async (userId: string) => {
-  const collaborations = await db
-    .select()
-    .from(noteCollaborator)
-    .where(eq(noteCollaborator.userId, userId));
-
-  const collaborationNotes = await Promise.all(
-    collaborations.map(async (collab) => {
-      const [collabNote] = await db
-        .select({
-          id: note.id,
-          ownerId: note.ownerId,
-          title: note.title,
-          updatedAt: note.updatedAt,
-        })
-        .from(note)
-        .where(eq(note.id, collab.noteId))
-        .limit(1);
-
-      const owner = await getOwnerName(collabNote.ownerId);
-      return { ...collabNote, owner };
+  const collaborationNotes = await db
+    .select({
+      id: note.id,
+      ownerId: note.ownerId,
+      title: note.title,
+      updatedAt: note.updatedAt,
+      owner: user.name,
     })
-  );
+    .from(noteCollaborator)
+    .innerJoin(note, eq(note.id, noteCollaborator.noteId))
+    .innerJoin(user, eq(user.id, note.ownerId))
+    .where(eq(noteCollaborator.userId, userId))
+    .orderBy(desc(note.updatedAt));
 
   return collaborationNotes;
 };

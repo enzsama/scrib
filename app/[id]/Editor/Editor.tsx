@@ -1,10 +1,19 @@
 "use client";
+import dynamic from "next/dynamic";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "@/lib/auth-client";
 import { useEffect, useRef, useState } from "react";
 import { WebsocketProvider } from "y-websocket";
 import * as Y from "yjs";
-import { Blocknote } from "./DynamicBlocknote";
+import NoteTitle from "./NoteTitle";
+const Blocknote = dynamic(() => import("./Blocknote"), {
+  ssr: false,
+  loading: () => (
+    <div className="mx-13">
+      <Skeleton className="h-8 w-full" />
+    </div>
+  ),
+});
 
 const Editor = ({ roomId }: { roomId: string }) => {
   const { data, isPending } = useSession();
@@ -39,9 +48,12 @@ const Editor = ({ roomId }: { roomId: string }) => {
   };
 
   return (
-    <div>
+    <>
+      <div className="mx-13 flex flex-col justify-center">
+        <NoteTitle doc={docRef.current} />
+      </div>
       <Blocknote doc={docRef.current} provider={provider} userInfo={userInfo} />
-    </div>
+    </>
   );
 };
 

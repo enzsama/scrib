@@ -20,12 +20,6 @@ import SidebarClientButton from "./SidebarClientButton";
 import UserNav from "./UserNav";
 
 // TODO: Get this data from the session or fetch from DB
-const mockUser = {
-  name: "Absterr",
-  email: "enzsama.dev@gmail.com",
-  avatar: "get picture from liveblocks or DB",
-};
-
 const menuItems = [
   {
     title: "Home",
@@ -59,7 +53,12 @@ const menuItems = [
   },
 ];
 
-const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
+const AppSidebar = ({
+  userDetails,
+  ...props
+}: React.ComponentProps<typeof Sidebar> & {
+  userDetails: { name: string; email: string; image: string | null };
+}) => {
   return (
     <Sidebar className="text-black" {...props}>
       <SidebarContent>
@@ -80,7 +79,7 @@ const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <UserNav user={mockUser} />
+        <UserNav user={userDetails} />
       </SidebarFooter>
     </Sidebar>
   );

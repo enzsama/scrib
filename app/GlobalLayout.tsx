@@ -6,8 +6,10 @@ import CustomTrigger from "./CustomTrigger";
 
 export default function GlobalLayout({
   children,
+  userDetails,
 }: {
   children: React.ReactNode;
+  userDetails: { name: string; email: string; image: string | null };
 }) {
   const pathname = usePathname();
   const authpathnames = [
@@ -26,7 +28,7 @@ export default function GlobalLayout({
   return (
     <main className="flex">
       <SidebarProvider>
-        <AppSidebar />
+        <AppSidebar userDetails={userDetails} />
         <div className="flex-1">
           <CustomTrigger />
           <div>{children}</div>

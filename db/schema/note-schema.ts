@@ -25,7 +25,7 @@ const bytea = customType<{
   },
 });
 
-// TODO: NEED TO ADD A FIELD FOR NOTE TYPE: COLLABORATIVE OR PERSONAL, ALSO WHETHER IT'S PUBLIC OR PRIVATE
+// TODO: NEED TO ADD A FIELD FOR NOTE TYPE: PUBLIC OR PRIVATE
 export const note = pgTable("note", {
   id: text()
     .primaryKey()

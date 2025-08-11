@@ -44,34 +44,6 @@ export const addCollaborator = async (noteId: string, userId: string) => {
 
 // PUT | PATCH
 
-export const updateTitle = async (noteId: string, newTitle: string) => {
-  const [currentNote] = await db
-    .select()
-    .from(note)
-    .where(eq(note.id, noteId))
-    .limit(1);
-
-  if (currentNote)
-    await db.update(note).set({ title: newTitle }).where(eq(note.id, noteId));
-};
-
-export const updateContent = async (
-  noteId: string,
-  newContent: Uint8Array<ArrayBufferLike>
-) => {
-  const [currentNote] = await db
-    .select()
-    .from(note)
-    .where(eq(note.id, noteId))
-    .limit(1);
-
-  if (currentNote)
-    await db
-      .update(note)
-      .set({ content: newContent })
-      .where(eq(note.id, noteId));
-};
-
 // DELETE
 
 export const removeCollaborator = async (noteId: string, userId: string) => {

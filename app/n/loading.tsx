@@ -29,46 +29,44 @@ const SkeletonRow = () => (
   </TableRow>
 );
 
-const NoteListLoading = () => {
-  return (
-    <section className="max-w-7xl py-8 mx-auto px-4">
-      <div className="mb-8">
-        <Skeleton className="h-10 w-56" />
-      </div>
-      <Table>
-        <TableCaption>
-          <div className="flex flex-col items-center">
-            <Skeleton className="w-26 h-6" />
-          </div>
-        </TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>
-              <Skeleton className="w-16 h-6" />
-            </TableHead>
-            <TableHead />
-            <TableHead>
-              <Skeleton className="w-32 h-6" />
-            </TableHead>
-            <TableHead>
-              <Skeleton className="w-36 h-6" />
-            </TableHead>
-            <TableHead />
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {Array.from({ length: 5 }).map((_, index) => (
-            <SkeletonRow key={index} />
-          ))}
-          <TableRow>
-            <TableCell>
-              <Skeleton className="w-26 h-8" />
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </section>
-  );
-};
+const NoteListLoading = () => (
+  <div className="max-w-7xl py-8 mx-auto px-4">
+    <div className="mb-8">
+      <Skeleton className="h-10 w-56" />
+    </div>
+    <Table>
+      <TableCaption>
+        <div className="flex flex-col items-center">
+          <Skeleton className="w-26 h-6" />
+        </div>
+      </TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead>
+            <Skeleton className="w-16 h-6" />
+          </TableHead>
+          <TableHead />
+          <TableHead>
+            <Skeleton className="w-32 h-6" />
+          </TableHead>
+          <TableHead>
+            <Skeleton className="w-36 h-6" />
+          </TableHead>
+          <TableHead />
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {Array.from({ length: 5 }).map((_, index) => (
+          <SkeletonRow key={index} />
+        ))}
+        <TableRow>
+          <TableCell>
+            <Skeleton className="w-26 h-8" />
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  </div>
+);
 
 export default NoteListLoading;

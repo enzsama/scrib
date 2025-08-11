@@ -1,30 +1,26 @@
 import { auth } from "@/lib/auth";
+import { getUserRecentNotes } from "@/lib/queries";
 import { getFirstName } from "@/lib/utils";
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import CustomCarousel from "./CustomCarousel";
-import { getUserCollaborationsNotes } from "@/lib/queries";
 
-const Home = async () => {
+const HomePage = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-
-  // Add a login markup and perhaps a button to the login page or a return the error page
-  if (!session || !session.user) return <div>Please log in</div>;
+  if (!session || !session.user) redirect("/login");
 
   const userInfo = {
     id: session.user.id,
     name: session.user.name,
   };
-
-  const userRecentNotes = await getUserCollaborationsNotes(userInfo.id);
+  const userRecentNotes = await getUserRecentNotes(userInfo.id);
 
   return (
     <section className="max-w-4xl py-8 mx-auto px-4">
       <header className="mb-12 flex justify-center">
-        <h1 className="text-3xl font-extrabold text-neutral-800">
-          Hello, {getFirstName(userInfo.name)}
-        </h1>
+        <h1>Hello, {getFirstName(userInfo.name)}</h1>
       </header>
 
       <div>
@@ -39,4 +35,4 @@ const Home = async () => {
   );
 };
 
-export default Home;
+export default HomePage;
